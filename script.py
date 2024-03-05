@@ -27,19 +27,6 @@ def insert_toc_in_readme(readme_path, toc_content):
             file.write(new_content)
 
 
-# def generate_toc_for_subdirectory(section_path, root_dir):
-#    toc = []
-#    for root, dirs, files in os.walk(section_path):
-#        if 'README.md' in files:
-#            readme_path = os.path.join(root, 'README.md')
-#            title = extract_title_from_readme(readme_path)
-#            if title and os.path.relpath(root, start=section_path) != '.':
-#                relative_path = os.path.relpath(readme_path, start=root_dir)
-#                link = f"- [{title}](./{relative_path})"
-#                toc.append(link)
-#    return "\n".join(toc)
-
-
 def generate_toc_for_subdirectory(section_path, root_dir):
     toc_links = []
     subdirs = []
@@ -59,11 +46,11 @@ def generate_toc_for_subdirectory(section_path, root_dir):
             relative_path_from_section = os.path.relpath(
                 readme_path, start=section_path
             )
-            # Now, ensure we get the part after the first '/'
-            # by splitting the path and then re-joining it excluding the first part
+
             parts_after_first_slash = "/".join(
                 relative_path_from_section.split("/")[0:]
             )
+
             link = f"- [{title}](./{parts_after_first_slash})"
             toc_links.append(link)
 
@@ -79,5 +66,7 @@ def update_subdirectory_readmes(root_dir):
             insert_toc_in_readme(readme_path, toc_content)
 
 
-root_directory = "."  # Start from the current directory
-update_subdirectory_readmes(root_directory)
+if __name__ == "__main__":
+    root_directory = os.getenv("PROJECT_HOME", os.getcwd())
+    root_directory = "."  # Start from the current directory
+    update_subdirectory_readmes(root_directory)
