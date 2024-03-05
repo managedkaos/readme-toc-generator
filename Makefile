@@ -29,12 +29,6 @@ unittest:
 build: pip lint
 	docker build --tag $(APP):$(TAG) .
 
-
-push:
-	docker tag $(APP):$(TAG) $(DOCKER_REPO)/$(APP):latest
-	docker tag $(APP):$(TAG) $(DOCKER_REPO)/$(APP):$(TAG)
-	docker push $(DOCKER_REPO)/$(APP):$(TAG)
-
 clean:
 	docker container stop $(APP) || true
 	docker container rm $(APP) || true
