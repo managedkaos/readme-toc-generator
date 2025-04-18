@@ -13,3 +13,8 @@ disable = "C0111,C0103,E0401"
 
 [tool.pylint.format]
 max-line-length = 88
+
+[tool.flake8]
+max-line-length = 88
+extend-ignore = ["E203", "E501", "W503", "W503"]
+exclude = [".git", "__pycache__", "build", "dist"]
